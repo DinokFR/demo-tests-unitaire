@@ -20,6 +20,10 @@ public class Maison {
 	 * @param nvPiece nouvelle pièce à ajouter
 	 */
 	public void ajouterPiece(Piece nvPiece) {
+
+		if (nvPiece == null || nvPiece.getSuperficie() <= 0) {
+			throw new IllegalArgumentException("La pièce est invalide : elle ne doit pas être nulle, et doit avoir une superficie positive");
+		}
 		
 		// On est obligé d'agrandir le tableau initial de 1 à chaque ajout
 		// d'une nouvelle pièce
@@ -42,7 +46,7 @@ public class Maison {
 	}
 	
 	public int nbPieces() {
-		return pieces.length-1;
+		return pieces.length;
 	}
 
 	/** Retourne la superficie d'un étage
@@ -54,7 +58,7 @@ public class Maison {
 
 		for (int i = 0; i < pieces.length; i++) {
 			if (choixEtage == this.pieces[i].getNumEtage()) {
-				superficieEtage = this.pieces[i].getSuperficie();
+				superficieEtage = superficieEtage + this.pieces[i].getSuperficie();
 			}
 		}
 
@@ -68,7 +72,7 @@ public class Maison {
 	public double superficieTypePiece(String typePiece) {
 		double superficie = 0;
 
-		for (int i = 1; i < pieces.length; i++) {
+		for (int i = 0; i < pieces.length; i++) {
 			if (typePiece!=null && typePiece.equals(this.pieces[i].getType())) {
 				superficie = superficie + this.pieces[i].getSuperficie();
 			}
